@@ -1657,6 +1657,7 @@ document.querySelectorAll('.scene').forEach(scene => {
   let currentLang = 'hi'; // default selection in overlay
   let narrationEnabled = true;
   let lastNarratedScene = -1;
+  let userHasInteracted = false;
 
   /* ── Speech Synthesis helper ── */
   const synth = window.speechSynthesis;
@@ -1756,11 +1757,25 @@ document.querySelectorAll('.scene').forEach(scene => {
 
   // Begin button dismisses overlay
   beginBtn.addEventListener('click', () => {
+    userHasInteracted = true;
+    
+    // Unlock speech synthesis on first user interaction
+    const unlockUtt = new SpeechSynthesisUtterance('');
+    unlockUtt.volume = 0;
+    synth.speak(unlockUtt);
+
     overlay.classList.add('hidden');
     setTimeout(() => { overlay.style.display = 'none'; }, 500);
     pill.classList.add('visible');
     // Voices may load asynchronously in some browsers
     synth.onvoiceschanged = () => {}; // ensure loaded
+    
+    // Explicitly narrate the first scene if not already done, 
+    // to ensure we play audio right after user interaction.
+    if (narrationEnabled && lastNarratedScene <= 0) {
+      lastNarratedScene = 0;
+      setTimeout(() => narrateText(NARRATION[currentLang][0], currentLang), 800);
+    }
   });
 
   /* ── Scroll-triggered scene narration ── */
@@ -1771,6 +1786,8 @@ document.querySelectorAll('.scene').forEach(scene => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
           if (lastNarratedScene === index) return; // already narrated
+          if (!userHasInteracted) return; // prevent speaking without user activation
+          
           lastNarratedScene = index;
           if (!narrationEnabled) return;
           const texts = NARRATION[currentLang];
