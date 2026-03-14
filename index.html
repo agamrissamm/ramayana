@@ -521,39 +521,119 @@
               <stop offset="0%" stop-color="#2d5a1e" stop-opacity="0.4" />
               <stop offset="100%" stop-color="#030f03" stop-opacity="0" />
             </radialGradient>
+            
+            <linearGradient id="trunkDark" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#020401"/>
+              <stop offset="50%" stop-color="#060f04"/>
+              <stop offset="100%" stop-color="#010300"/>
+            </linearGradient>
+
+            <filter id="foliageTex" x="-20%" y="-20%" width="140%" height="140%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.15  0 0 0 0 0.05  0 0 0 0.4 0" in="noise" result="coloredNoise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" result="displacedLeaves" />
+              <feComposite in="coloredNoise" in2="displacedLeaves" operator="in" result="textureLayer" />
+              <feBlend mode="multiply" in="displacedLeaves" in2="textureLayer" />
+            </filter>
+
+            <filter id="barkTex" x="-10%" y="-10%" width="120%" height="120%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.1 1.5" numOctaves="3" result="noise" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0" in="noise" result="alpha" />
+              <feComposite in="alpha" in2="SourceGraphic" operator="in" result="bark" />
+              <feBlend mode="multiply" in="SourceGraphic" in2="bark" />
+            </filter>
+
+            <g id="realTree1">
+              <rect x="-8" y="-400" width="16" height="400" fill="url(#trunkDark)" filter="url(#barkTex)" />
+              <path d="M0,-380 C 20,-300 40,-260 60,-220 C 40,-230 20,-240 10,-245 C 30,-200 60,-160 85,-110 C 50,-125 25,-140 10,-145 C 40,-80 80,-40 110,20 C 80,-5 40,-25 15,-30 C 20,-10 30,15 40,40 L -40,40 C -30,15 -20,-10 -15,-30 C -40,-25 -80,-5 -110,20 C -80,-40 -40,-80 -10,-145 C -25,-140 -50,-125 -85,-110 C -60,-160 -30,-200 -10,-245 C -20,-240 -40,-230 -60,-220 C -40,-260 -20,-300 0,-380 Z" filter="url(#foliageTex)" />
+              <path d="M0,-320 C 15,-260 30,-230 40,-190 C 20,-200 10,-210 0,-210 C -10,-210 -20,-200 -40,-190 C -30,-230 -15,-260 0,-320 Z" fill="#000" opacity="0.3" filter="url(#foliageTex)" />
+              <path d="M0,-200 C 25,-140 45,-110 60,-60 C 30,-70 15,-80 0,-80 C -15,-80 -30,-70 -60,-60 C -45,-110 -25,-140 0,-200 Z" fill="#000" opacity="0.35" filter="url(#foliageTex)" />
+            </g>
+
+            <g id="realTree2">
+              <rect x="-12" y="-300" width="24" height="300" fill="url(#trunkDark)" filter="url(#barkTex)" />
+              <path d="M0,-280 C 30,-280 80,-250 110,-200 C 90,-205 60,-210 40,-215 C 80,-180 130,-140 150,-80 C 110,-95 70,-110 30,-120 C 60,-80 100,-40 120,20 C 80,-10 40,-30 15,-40 L -15,-40 C -40,-30 -80,-10 -120,20 C -100,-40 -60,-80 -30,-120 C -70,-110 -110,-95 -150,-80 C -130,-140 -80,-180 -40,-215 C -60,-210 -90,-205 -110,-200 C -80,-250 -30,-280 0,-280 Z" filter="url(#foliageTex)" />
+              <path d="M0,-230 C 25,-210 45,-170 60,-130 C 40,-140 20,-145 0,-145 C -20,-145 -40,-140 -60,-130 C -45,-170 -25,-210 0,-230 Z" fill="#000" opacity="0.25" filter="url(#foliageTex)" />
+            </g>
+
+            <g id="realTree3">
+              <rect x="-6" y="-450" width="12" height="450" fill="url(#trunkDark)" filter="url(#barkTex)" />
+              <path d="M0,-430 L 30,-320 L 15,-330 L 50,-240 L 25,-250 L 70,-150 L 35,-165 L 95,-50  L 45,-70 L 105,40  L -105,40 L -45,-70 L -95,-50 L -35,-165 L -70,-150 L -25,-250 L -50,-240 L -15,-330 L -30,-320 Z" filter="url(#foliageTex)" />
+              <path d="M0,-350 L 25,-250 L 8,-260 L 40,-160 L -40,-160 L -8,-260 L -25,-250 Z" fill="#000" opacity="0.3" filter="url(#foliageTex)" />
+              <path d="M0,-160 L 50,-50 L 20,-65 L 75,30 L -75,30 L -20,-65 L -50,-50 Z" fill="#000" opacity="0.3" filter="url(#foliageTex)" />
+            </g>
           </defs>
+
+          <!-- Layer 0: Background Base -->
           <rect width="1440" height="600" fill="#020c02" />
           <rect width="1440" height="600" fill="url(#forestLight)" />
-          <!-- Deep trees -->
-          <g opacity="0.9">
-            <g fill="#041004">
-              <polygon points="0,600 80,100 160,600" />
-              <polygon points="100,600 190,80 280,600" />
-              <polygon points="250,600 340,120 430,600" />
-              <polygon points="400,600 490,90 580,600" />
-              <polygon points="550,600 640,100 730,600" />
-              <polygon points="700,600 790,80 880,600" />
-              <polygon points="850,600 940,110 1030,600" />
-              <polygon points="1000,600 1090,90 1180,600" />
-              <polygon points="1150,600 1240,100 1330,600" />
-              <polygon points="1290,600 1370,120 1440,500 1440,600" />
-            </g>
-            <g fill="#061506" opacity="0.7">
-              <polygon points="50,600 120,180 190,600" />
-              <polygon points="200,600 270,160 340,600" />
-              <polygon points="370,600 440,150 510,600" />
-              <polygon points="540,600 610,170 680,600" />
-              <polygon points="720,600 790,160 860,600" />
-              <polygon points="890,600 960,150 1030,600" />
-              <polygon points="1060,600 1130,170 1200,600" />
-              <polygon points="1230,600 1300,180 1370,600" />
-            </g>
+          
+          <rect x="0" y="520" width="1440" height="80" fill="#020a02" filter="url(#barkTex)" />
+          
+          <!-- Layer 1: Deepest Dense Line -->
+          <g fill="#020803" opacity="0.5">
+            <use href="#realTree3" transform="translate(40, 600) scale(0.6)" />
+            <use href="#realTree1" transform="translate(110, 600) scale(0.7)" />
+            <use href="#realTree2" transform="translate(180, 600) scale(0.55)" />
+            <use href="#realTree3" transform="translate(250, 600) scale(0.65)" />
+            <use href="#realTree1" transform="translate(320, 600) scale(0.8)" />
+            <use href="#realTree2" transform="translate(390, 600) scale(0.6)" />
+            <use href="#realTree3" transform="translate(460, 600) scale(0.75)" />
+            <use href="#realTree1" transform="translate(530, 600) scale(0.55)" />
+            <use href="#realTree2" transform="translate(600, 600) scale(0.8)" />
+            <use href="#realTree3" transform="translate(670, 600) scale(0.65)" />
+            <use href="#realTree1" transform="translate(740, 600) scale(0.75)" />
+            <use href="#realTree2" transform="translate(810, 600) scale(0.6)" />
+            <use href="#realTree3" transform="translate(880, 600) scale(0.8)" />
+            <use href="#realTree1" transform="translate(950, 600) scale(0.55)" />
+            <use href="#realTree2" transform="translate(1020, 600) scale(0.7)" />
+            <use href="#realTree3" transform="translate(1090, 600) scale(0.85)" />
+            <use href="#realTree1" transform="translate(1160, 600) scale(0.6)" />
+            <use href="#realTree2" transform="translate(1230, 600) scale(0.75)" />
+            <use href="#realTree3" transform="translate(1300, 600) scale(0.65)" />
+            <use href="#realTree1" transform="translate(1370, 600) scale(0.8)" />
+            <use href="#realTree2" transform="translate(1440, 600) scale(0.7)" />
           </g>
-          <!-- Ground -->
-          <rect x="0" y="540" width="1440" height="60" fill="#020a02" />
-          <!-- Light beams -->
-          <polygon points="580,0 560,300 640,300 620,0" fill="#4a8f2010" opacity="0.3" />
-          <polygon points="780,0 760,300 840,300 820,0" fill="#4a8f2010" opacity="0.3" />
+          
+          <!-- Layer 2: Mid Trees -->
+          <g fill="#041205" opacity="0.8">
+            <use href="#realTree1" transform="translate(-10, 600) scale(0.85)" />
+            <use href="#realTree3" transform="translate(150, 600) scale(0.95)" />
+            <use href="#realTree2" transform="translate(280, 600) scale(1.05)" />
+            <use href="#realTree1" transform="translate(420, 600) scale(0.9)" />
+            <use href="#realTree3" transform="translate(560, 600) scale(1.15)" />
+            <use href="#realTree2" transform="translate(710, 600) scale(0.85)" />
+            <use href="#realTree1" transform="translate(850, 600) scale(1.1)" />
+            <use href="#realTree3" transform="translate(1000, 600) scale(0.9)" />
+            <use href="#realTree2" transform="translate(1140, 600) scale(1.0)" />
+            <use href="#realTree1" transform="translate(1280, 600) scale(0.85)" />
+            <use href="#realTree3" transform="translate(1420, 600) scale(1.1)" />
+          </g>
+
+          <!-- Layer 3: Foreground Trees -->
+          <g fill="#071b08" opacity="0.95">
+            <use href="#realTree2" transform="translate(80, 600) scale(1.4)" />
+            <use href="#realTree3" transform="translate(340, 600) scale(1.5)" />
+            <use href="#realTree1" transform="translate(620, 600) scale(1.3)" />
+            <use href="#realTree2" transform="translate(930, 600) scale(1.55)" />
+            <use href="#realTree3" transform="translate(1220, 600) scale(1.4)" />
+            <use href="#realTree1" transform="translate(1380, 600) scale(1.6)" />
+          </g>
+          
+          <!-- Layer 4: Giant Anchors -->
+          <g fill="#0a220b">
+            <use href="#realTree1" transform="translate(-40, 600) scale(2.2)" />
+            <use href="#realTree2" transform="translate(1460, 600) scale(2.3)" />
+          </g>
+
+          <!-- Light Beams and Motes -->
+          <g opacity="0.25">
+            <polygon points="560,0 480,450 640,450 630,0" fill="#4a8f20" />
+            <polygon points="800,0 720,400 900,400 860,0" fill="#6ba341" opacity="0.8" />
+          </g>
+          
+          <!-- Textured Ground Cover Overlay -->
+          <path d="M0,540 Q360,510 720,550 T1440,530 L1440,600 L0,600 Z" fill="#030d03" filter="url(#foliageTex)" opacity="0.8" />
         </svg>
       </div>
     </div>
@@ -651,10 +731,40 @@
           <line x1="180" y1="85" x2="220" y2="70" stroke="#1a0000" stroke-width="4" />
           <line x1="180" y1="95" x2="222" y2="90" stroke="#1a0000" stroke-width="4" />
         </g>
+        <!-- Captured Sita Figure in Chariot (Initially Hidden via JS opacity 0 to 1) -->
+        <g id="captured-sita" opacity="0" transform="translate(70, 70)">
+           <!-- Glowing aura -->
+           <ellipse cx="20" cy="40" rx="30" ry="50" fill="#f5b942" opacity="0.3" filter="blur(4px)"/>
+           <!-- Head -->
+           <circle cx="20" cy="15" r="8" fill="#fff8d0" />
+           <!-- Body draped in sari -->
+           <path d="M10,25 C25,25 30,35 25,65 L10,65 C10,45 5,35 10,25 Z" fill="#ffd700" opacity="0.9" />
+           <!-- Reaching hand -->
+           <path d="M15,30 Q -5,10 -20,5" stroke="#fff8d0" stroke-width="3" fill="none" stroke-linecap="round" />
+        </g>
         <!-- Crown glow -->
         <polygon points="155,30 160,15 165,30 170,10 175,30 180,18 185,30" fill="#8b0000" opacity="0.9" />
       </svg>
     </div>
+    
+    <!-- Sita on the ground crying out, glowing -->
+    <div class="sita-abducted" id="sita-ground">
+      <svg viewBox="0 0 100 150" width="100%" height="100%">
+        <!-- Aura -->
+        <ellipse cx="50" cy="75" rx="45" ry="70" fill="#f5b942" opacity="0.4" filter="blur(4px)"/>
+        <!-- Figure -->
+        <g opacity="0.9">
+          <!-- Head -->
+          <circle cx="50" cy="30" r="12" fill="#fff8d0" />
+          <!-- Flowing sari -->
+          <path d="M35,45 C60,45 65,70 55,120 L30,120 C30,80 20,60 35,45 Z" fill="#ffd700" />
+          <!-- Desperate reaching arms -->
+          <path d="M45,50 Q10,40 -10,10" stroke="#fff8d0" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M55,50 Q80,30 110,-10" stroke="#fff8d0" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
     <div class="jatayu-scene" id="jatayu">
       <svg viewBox="0 0 200 150" class="jatayu-svg">
         <g fill="#8b4513" opacity="0.8">
@@ -919,10 +1029,22 @@
        SCENE 9 — BURNING OF LANKA
   ══════════════════════════════════════ -->
   <section id="scene-9" class="scene scene-fire" data-chapter="The Burning of Lanka" aria-labelledby="s9-title">
-    <canvas id="fireCanvas" class="fire-canvas"></canvas>
+    <!-- SVG Fire Filter -->
+    <svg style="position:absolute; width:0; height:0;">
+      <defs>
+        <filter id="real-fire">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03 0.05" numOctaves="3" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="40" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+          <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -6" in="displaced" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" mode="screen" />
+        </filter>
+      </defs>
+    </svg>
+    <canvas id="fireCanvas" class="fire-canvas" style="filter: url(#real-fire);"></canvas>
     <div class="ember-container" id="embers"></div>
     <div class="smoke-layer" id="smoke1"></div>
     <div class="smoke-layer" id="smoke2"></div>
+    <div class="smoke-layer" id="smoke3" style="animation-delay: 3s; animation-duration: 18s;"></div>
     <div class="scene-content scene-content-right fire-content" id="s9-content">
       <div class="scene-number fire-number">IX</div>
       <h2 class="scene-title fire-title" id="s9-title">The Burning<br>of Lanka</h2>
